@@ -30,6 +30,7 @@ def read_document(ticker):
     for doc in collection.find({"Ticker" : ticker}):
       outDoc = json.dumps(doc, indent=4, default=json_util.default)
       print outDoc
+      return outDoc
       
   except Exception:
     print "Invalid data type passed to application, and or unexpatected value processed. Please try again. If the issue persist please contact administrator"

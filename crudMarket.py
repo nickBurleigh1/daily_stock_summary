@@ -1,7 +1,7 @@
 import json
 from bson import json_util
 from pymongo import MongoClient
-import ast
+
 
 
 #connection to localhost db market, collection stocks
@@ -12,32 +12,61 @@ collection = db['stocks']
 
 #create document function accepts bson, json, dict
 def create_document(document):
-  result = collection.save(document)
-  return result
+  try:
+    result = collection.save(document)
+    return result
+    
+  except Exception:
+    print "Invalid data type passed to application, and or unexpatected value processed. Please try again. If the issue persist please contact administrator"
+  
+ 
 
+    
+    
 #function reads stocks via Ticker field
 
 def read_document(ticker):
-  for doc in collection.find({"Ticker" : ticker}):
-    outDoc = json.dumps(doc, indent=4, default=json_util.default)
-    print outDoc
+  try:
+    for doc in collection.find({"Ticker" : ticker}):
+      outDoc = json.dumps(doc, indent=4, default=json_util.default)
+      print outDoc
+      
+  except Exception:
+    print "Invalid data type passed to application, and or unexpatected value processed. Please try again. If the issue persist please contact administrator"
+  
 
 
+    
+    
 #update document function requires Ticker, modifiy value and Target field
+
 def update_document(ticker, target_field, mod_value):
-  myquery = { "Ticker": ticker }
-  newvalues = { "$set": { target_field : mod_value } }
-  result = collection.update_one(myquery, newvalues)
-  print "Updated Record!!"
-  return result
+  try:
+    myquery = { "Ticker": ticker }
+    newvalues = { "$set": { target_field : mod_value } }
+    result = collection.update_one(myquery, newvalues)
+    print "Updated Record!!"
+    return result    
+  
+  except Exception:
+    print "Invalid data type passed to application, and or unexpatected value processed. Please try again. If the issue persist please contact administrator"
 
+
+    
+    
 #delete_document funtion delete by ticker
-def delete_document(ticker):
-  myquery = { "Ticker": ticker }
-  result = collection.delete_one(myquery)
-  return result
- 
 
+def delete_document(ticker):
+  try:
+    myquery = { "Ticker": ticker }
+    result = collection.delete_one(myquery)
+    return result
+  
+  except Exception:
+    print "Invalid data type passed to application, and or unexpatected value processed. Please try again. If the issue persist please contact administrator"
+
+
+ 
 def main():
   print "Started"
   testDocument = {

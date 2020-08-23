@@ -78,6 +78,7 @@ class TestCrudFunctions(unittest.TestCase):
   def test_create_document(self):
     self.assertNotEqual(create_document(testDocument), None)
     self.assertRaises(read_document("TEST_NO_ACTION"))
+    delete_document("TEST_NO_ACTION")
     
   def test_read_document(self):
     create_document(testDocument)
@@ -87,6 +88,7 @@ class TestCrudFunctions(unittest.TestCase):
 
   def test_update_document(self):
     self.assertRaises(update_document("TEST_NO_ACTION", "PEG", 1.5))
+    delete_document("TEST_NO_ACTION")
     
   def test_delete_document(self):
     delete_document("TEST_NO_ACTION")

@@ -2,6 +2,7 @@
 import json
 from bson import json_util
 from crudMarket import create_document, read_document, update_document, delete_document
+from DSS import top5ByIndustry
 import bottle
 from bottle import route, run, request, abort, post, get, put
 import ast
@@ -35,11 +36,22 @@ def modify_document():
 @route('/stocks/api/v1.0/deleteStock', method='GET')
 def remove_document():
   ticker=request.query.ticker
-  delete_document(ticker
-                 
-                 
-                 )
+  delete_document(ticker)
+  
+@route('/stocks/api/v1.0/stockReport', method='GET')
+def get_document():
+  result = []
+  ticker_request_list = request.query.ticker_list
+  for ticker in ticker_request_list:
+    result.append(read_document(ticker))
+    print read_document(ticker)
+  return result
 
+@route('/stocks/api/v1.0/industryReport', method='GET')
+def topByIndustry():
+  industry = request.query.industry
+  print top5ByIndustry(industry)
+  
 if __name__ == '__main__':	
 	#app.run(debug=True)
 	run(host='localhost', port=8080)

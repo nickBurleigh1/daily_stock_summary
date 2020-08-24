@@ -39,6 +39,24 @@ def outstandingSharesBySector(sector):
     print outDoc
   return outDoc
 
+
+
+def top5ByIndustry(industry):
+  thisList = []
+  query = collection.aggregate([{'$match' : {"Industry" : industry}}, {'$sort' : {"P/E" : 1}}, {'$limit' : 5}])
+  
+  for doc in query:
+    outDoc = json.dumps(doc, indent=4, default=json_util.default)
+    print outDoc
+    return outDoc
+    
+ 
+
+
+
+
+
+
 def get_user_choice():
     print("\n[1] Display 50-Day Simple Moving Average symbols between set range.")
     print("[2] Display Ticker symbols by Industry.")
@@ -56,7 +74,7 @@ def title_bar():
     
     
     
-def main():
+def menu():
   #avgRange(0.0463, 0.07)
   #searchByIndustry("Medical Laboratories & Research")
   #outstandingSharesBySector("Healthcare")
@@ -88,4 +106,3 @@ def main():
     else:
       print("\nInvalid Choice: Please choose function you wish to perform.\n")
         
-main()
